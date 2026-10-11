@@ -1,39 +1,36 @@
 @echo off
 cd /d "%~dp0"
-chcp 65001 >nul
-title 历史人物内容生成 AI 评测
+chcp 936
+title ��ʷ������������ AI ����
 
 echo ============================================
-echo   历史人物内容生成 AI 评测
+echo   ��ʷ������������ AI ����
 echo ============================================
 echo.
 
 if not exist ".env" (
-    echo [!] 未找到 .env 文件，正在从模板创建...
-    copy ".env.example" ".env" >nul
+    echo [!] δ�ҵ� .env �ļ������ڴ�ģ�崴��...
+    copy ".env.example" ".env"
+    echo.
 )
 
-findstr /C:"PUT_YOUR_KEY_HERE" ".env" >nul 2>&1
-if %errorlevel% equ 0 (
-    echo [!] 检测到你还没有填写 API Key。
-    echo.
-    echo     接下来会用记事本打开 .env 文件，
-    echo     请把 PUT_YOUR_KEY_HERE 替换成你自己的 DeepSeek Key，
-    echo     然后保存并关闭记事本。
-    echo.
-    pause
-    notepad .env
-    echo.
-    echo     填好后按任意键开始评测...
-    pause >nul
-)
+echo   ��������������ļ� .env
+echo   ��ȷ�� DEEPSEEK_API_KEY �Ⱥź�������������ʵ Key
+echo   ��ú󱣴棬�رռ��±����ɡ�
+echo.
+pause
+start notepad .env
+echo.
+echo   ������밴�������ʼ����...
+pause
 
-echo [1/2] 开始评测，大约需要 1-2 分钟，请勿关闭窗口...
+echo.
+echo [1/2] ��ʼ���⣬Լ 1-2 ���ӣ�����رմ���...
 echo.
 call promptfoo eval
 
 echo.
-echo [2/2] 正在打开结果网页...
+echo [2/2] ���ڴ򿪽����ҳ...
 call promptfoo view
 
 echo.
