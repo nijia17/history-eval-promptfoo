@@ -1,0 +1,37 @@
+# ==============================================================
+# 历史人物内容生成 · AI 输出自动化评测
+#
+# 评测工具：promptfoo（开源 LLM 评测框架，https://promptfoo.dev）
+# 评测目标：验证「知识库约束」对 AI 生成内容事实准确性的影响
+#
+# 运行方式：
+#   1. 在 .env 文件中填入 DEEPSEEK_API_KEY
+#   2. 命令行执行： promptfoo eval
+#   3. 查看结果：   promptfoo view
+# ==============================================================
+
+description: "历史人物内容生成 AI 输出评测（知识库约束 A/B 对照）"
+
+# ---------------- 待测提示词（两个变体做对照） ----------------
+prompts:
+  - file://prompts/baseline.txt       # 对照组：无知识库约束，直接提问
+  - file://prompts/kb_grounded.txt    # 实验组：注入知识库资料后再生成
+
+# ---------------- 待测模型 ----------------
+providers:
+  - id: deepseek:deepseek-chat
+    label: "DeepSeek-Chat"
+    config:
+      temperature: 0.7
+
+# ---------------- 全局默认配置 ----------------
+defaultTest:
+  options:
+    # 指定 llm-rubric 断言使用哪个模型当「评委」
+    provider: deepseek:deepseek-chat
+
+# ---------------- 测试用例（由知识库自动生成） ----------------
+tests: file://data/testcases.yaml
+
+# ---------------- 结果输出 ----------------
+outputPath: results.json

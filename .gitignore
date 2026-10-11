@@ -1,0 +1,9 @@
+# 密钥文件，绝对不能提交到 GitHub
+.env
+
+# 评测输出与缓存
+results.json
+.promptfoo/
+
+# 依赖
+node_modules/
